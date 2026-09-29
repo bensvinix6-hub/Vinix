@@ -1,0 +1,729 @@
+<!-- ... existing code ... -->
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>عالم بن سعدون عبد الرزاق - عالم الأنمي بين يديك</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- استدعاء خط كوفي عربي و Cairo للتنسيق -->
+    <link href="https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@400;500;600;700&family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        kufi: ['Reem Kufi', 'sans-serif'],
+                        cairo: ['Cairo', 'sans-serif'],
+                    },
+                    colors: {
+                        animeDark: '#0b0f19',
+                        animeCard: '#131c2e',
+                        animeRed: '#e50914',
+                        animeRedHover: '#f40612',
+                        animeGold: '#fbbf24',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #0b0f19;
+            color: #f3f4f6;
+        }
+        /* تطبيق الخط الكوفي على العناوين والشعارات */
+        h1, h2, h3, h4, .font-kufi {
+            font-family: 'Reem Kufi', sans-serif !important;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0b0f19;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1f2937;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #e50914;
+        }
+    </style>
+</head>
+<body class="bg-animeDark text-gray-100 min-h-screen flex flex-col selection:bg-animeRed selection:text-white">
+
+    <header class="sticky top-0 z-50 bg-animeDark/95 backdrop-blur-md border-b border-gray-800 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                
+                <!-- Logo & Nav Links -->
+                <div class="flex items-center gap-8">
+                    <!-- Logo -->
+                    <a href="#" class="flex items-center gap-3 group">
+                        <div class="w-11 h-11 rounded-full bg-gradient-to-tr from-animeRed to-amber-500 flex items-center justify-center text-white font-black text-xl shadow-md group-hover:scale-105 transition-transform flex-shrink-0">
+                            <i class="fa-solid fa-play"></i>
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="text-base sm:text-lg font-black tracking-wide text-white font-kufi leading-tight">
+                                عالم بن سعدون <span class="text-animeRed">عبد الرزاق</span>
+                            </span>
+                            <span class="text-[10px] text-gray-400 font-medium tracking-tight">بوابة الأنمي العربية</span>
+                        </div>
+                    </a>
+
+                    <!-- Desktop Nav Links -->
+                    <nav class="hidden lg:flex items-center gap-1 xl:gap-2">
+                        <a href="#" class="px-3 py-2 rounded-lg text-sm font-bold text-animeRed bg-animeRed/10 transition-colors">الرئيسية</a>
+                        <a href="#anime-section" class="px-3 py-2 rounded-lg text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-800 transition-colors">الأنميات</a>
+                        <a href="#watchlist" class="px-3 py-2 rounded-lg text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-800 transition-colors">قوائم المشاهدة</a>
+                        <a href="#news-section" class="px-3 py-2 rounded-lg text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-800 transition-colors">الأخبار</a>
+                        <a href="#forum" class="px-3 py-2 rounded-lg text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-800 transition-colors">المنتدى</a>
+                    </nav>
+                </div>
+
+                <!-- Search & User Actions -->
+                <div class="flex items-center gap-4">
+                    <!-- Search Bar -->
+                    <div class="relative hidden sm:block w-48 md:w-64">
+                        <span class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-gray-400">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </span>
+                        <input type="text" id="searchInput" placeholder="ابحث عن أنمي، شخصية، أو استوديو..." 
+                            class="w-full bg-gray-900 border border-gray-700 rounded-full py-2 pr-10 pl-4 text-sm text-gray-200 placeholder-gray-500 focus:outline-none focus:border-animeRed focus:ring-1 focus:ring-animeRed transition-all">
+                    </div>
+
+                    <!-- Notifications -->
+                    <button class="relative p-2 rounded-full text-gray-300 hover:text-white hover:bg-gray-800 transition-colors" title="الإشعارات" onclick="showNotificationModal('لا توجد إشعارات جديدة حالياً')">
+                        <i class="fa-regular fa-bell text-xl"></i>
+                        <span class="absolute top-1.5 left-1.5 w-2.5 h-2.5 bg-animeRed rounded-full ring-2 ring-animeDark"></span>
+                    </button>
+
+                    <!-- User Profile -->
+                    <div class="flex items-center gap-3 cursor-pointer group" onclick="showNotificationModal('تم تسجيل الدخول بحساب: زائر مميز')">
+                        <div class="w-10 h-10 rounded-full border-2 border-animeRed overflow-hidden group-hover:scale-105 transition-transform">
+                            <img src="https://placehold.co/100x100/e50914/ffffff?text=BS" alt="Profile" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+
+                    <!-- Mobile Menu Button -->
+                    <button id="mobileMenuBtn" class="lg:hidden text-gray-300 hover:text-white p-2">
+                        <i class="fa-solid fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobileMenu" class="hidden lg:hidden bg-animeCard border-b border-gray-800 px-4 pt-2 pb-4 space-y-2">
+            <div class="relative mb-3">
+                <span class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-gray-400">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </span>
+                <input type="text" placeholder="ابحث عن أنمي..." class="w-full bg-gray-900 border border-gray-700 rounded-lg py-2 pr-10 pl-4 text-sm text-gray-200 placeholder-gray-500">
+            </div>
+            <a href="#" class="block px-3 py-2 rounded-lg text-base font-bold text-animeRed bg-animeRed/10">الرئيسية</a>
+            <a href="#anime-section" class="block px-3 py-2 rounded-lg text-base font-medium text-gray-300 hover:bg-gray-800">الأنميات</a>
+            <a href="#watchlist" class="block px-3 py-2 rounded-lg text-base font-medium text-gray-300 hover:bg-gray-800">قوائم المشاهدة</a>
+            <a href="#news-section" class="block px-3 py-2 rounded-lg text-base font-medium text-gray-300 hover:bg-gray-800">الأخبار</a>
+            <a href="#forum" class="block px-3 py-2 rounded-lg text-base font-medium text-gray-300 hover:bg-gray-800">المنتدى</a>
+        </div>
+    </header>
+
+    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 w-full grid grid-cols-1 lg:grid-cols-4 gap-8">
+        
+        <!-- Main Content Area (Left 3 columns on large screens) -->
+        <div class="lg:col-span-3 space-y-8">
+            
+            <!-- Hero Banner / Slider -->
+            <section class="relative rounded-2xl overflow-hidden shadow-2xl bg-gray-900 border border-gray-800 group h-[420px] md:h-[480px]">
+                <!-- Background Image & Overlay -->
+                <div class="absolute inset-0">
+                    <img id="heroImage" src="https://images.unsplash.com/photo-1578632767115-351597cf2477?auto=format&fit=crop&q=80&w=1200" alt="Hero Banner" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                    <div class="absolute inset-0 bg-gradient-to-t from-animeDark via-animeDark/60 to-transparent"></div>
+                    <div class="absolute inset-0 bg-gradient-to-r from-animeDark via-transparent to-transparent"></div>
+                </div>
+
+                <!-- Slider Controls -->
+                <button onclick="prevSlide()" class="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/50 hover:bg-animeRed text-white flex items-center justify-center transition-colors backdrop-blur-sm z-10">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </button>
+                <button onclick="nextSlide()" class="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/50 hover:bg-animeRed text-white flex items-center justify-center transition-colors backdrop-blur-sm z-10">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </button>
+
+                <!-- Hero Content -->
+                <div class="absolute bottom-0 right-0 left-0 p-6 md:p-10 flex flex-col items-start z-10">
+                    <div class="flex items-center gap-2 mb-3">
+                        <span id="heroBadge" class="px-3 py-1 bg-animeRed text-white text-xs font-bold rounded-full shadow-md font-kufi">أنمي الموسم</span>
+                        <span class="px-3 py-1 bg-black/60 backdrop-blur-md text-amber-400 text-xs font-bold rounded-full border border-amber-500/30 flex items-center gap-1 font-kufi">
+                            <i class="fa-solid fa-star"></i> <span id="heroRating">9.3</span>
+                        </span>
+                    </div>
+
+                    <h1 id="heroTitle" class="text-2xl md:text-4xl font-black text-white mb-3 tracking-wide drop-shadow-lg font-kufi">
+                        روروني كينشين - فصل هوكايدو
+                    </h1>
+
+                    <p id="heroDesc" class="text-gray-300 text-sm md:text-base max-w-2xl mb-6 line-clamp-2 leading-relaxed">
+                        يعود كينشين هيمورا في فصل جديد مليء بالإثارة، حيث يواجه ماضياً مظلماً في شمال اليابان. هل سيظل السيف مغموراً بالدماء؟
+                    </p>
+
+                    <div class="flex flex-wrap items-center gap-4">
+                        <button onclick="openWatchModal()" class="px-6 py-3 bg-animeRed hover:bg-animeRedHover text-white font-bold rounded-xl shadow-lg shadow-animeRed/30 flex items-center gap-2 transition-all hover:scale-105 active:scale-95 font-kufi">
+                            <i class="fa-solid fa-play text-sm"></i> مشاهدة الآن
+                        </button>
+                        <button onclick="openDetailsModal()" class="px-6 py-3 bg-gray-800/80 hover:bg-gray-700 text-white font-bold rounded-xl backdrop-blur-md border border-gray-700 flex items-center gap-2 transition-all hover:scale-105 active:scale-95 font-kufi">
+                            <i class="fa-solid fa-circle-info text-sm"></i> مزيد من التفاصيل
+                        </button>
+                    </div>
+
+                    <!-- Slide Indicators -->
+                    <div class="flex items-center gap-2 mt-6 mx-auto" id="slideDots">
+                        <span onclick="setSlide(0)" class="w-8 h-2 rounded-full bg-animeRed cursor-pointer transition-all"></span>
+                        <span onclick="setSlide(1)" class="w-2 h-2 rounded-full bg-gray-600 hover:bg-gray-400 cursor-pointer transition-all"></span>
+                        <span onclick="setSlide(2)" class="w-2 h-2 rounded-full bg-gray-600 hover:bg-gray-400 cursor-pointer transition-all"></span>
+                        <span onclick="setSlide(3)" class="w-2 h-2 rounded-full bg-gray-600 hover:bg-gray-400 cursor-pointer transition-all"></span>
+                    </div>
+                </div>
+            </section>
+
+            <section id="anime-section" class="space-y-6">
+                <div class="flex items-center justify-between">
+                    <h2 class="text-xl md:text-2xl font-black text-white flex items-center gap-2 font-kufi">
+                        <i class="fa-solid fa-fire text-animeRed"></i> أشهر الأنميات حالياً
+                    </h2>
+                    <a href="#" class="text-sm font-semibold text-animeRed hover:underline flex items-center gap-1 font-kufi">
+                        عرض الكل <i class="fa-solid fa-angle-left"></i>
+                    </a>
+                </div>
+
+                <!-- Grid of Anime Cards -->
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-3 xl:grid-cols-3 gap-4 md:gap-6">
+                    
+                    <!-- Anime Card 1 -->
+                    <div class="bg-animeCard rounded-2xl overflow-hidden border border-gray-800/80 shadow-lg hover:border-animeRed/50 transition-all group flex flex-col">
+                        <div class="relative aspect-[3/4] overflow-hidden bg-gray-900">
+                            <img src="https://images.unsplash.com/photo-1541562232579-512a21360020?auto=format&fit=crop&q=80&w=400" alt="Attack on Titan" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                            <div class="absolute top-3 right-3 bg-black/70 backdrop-blur-md px-2.5 py-1 rounded-lg text-xs font-bold text-amber-400 flex items-center gap-1 font-kufi">
+                                <i class="fa-solid fa-star"></i> 9.0
+                            </div>
+                            <div class="absolute bottom-3 right-3 bg-animeRed text-white text-[10px] font-bold px-2 py-0.5 rounded shadow font-kufi">
+                                مكتمل
+                            </div>
+                        </div>
+                        <div class="p-4 flex flex-col flex-grow justify-between">
+                            <div>
+                                <h3 class="font-bold text-white text-base mb-1 line-clamp-1 group-hover:text-animeRed transition-colors font-kufi">هجوم العملاقة</h3>
+                                <p class="text-xs text-gray-400 mb-3">أكشن - دراما - غموض</p>
+                            </div>
+                            <button onclick="openWatchModal('هجوم العملاقة')" class="w-full py-2 bg-gray-800 hover:bg-animeRed text-white font-bold text-xs rounded-xl transition-colors flex items-center justify-center gap-1 font-kufi">
+                                <i class="fa-solid fa-play"></i> مشاهدة
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Anime Card 2 -->
+                    <div class="bg-animeCard rounded-2xl overflow-hidden border border-gray-800/80 shadow-lg hover:border-animeRed/50 transition-all group flex flex-col">
+                        <div class="relative aspect-[3/4] overflow-hidden bg-gray-900">
+                            <img src="https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?auto=format&fit=crop&q=80&w=400" alt="One Piece" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                            <div class="absolute top-3 right-3 bg-black/70 backdrop-blur-md px-2.5 py-1 rounded-lg text-xs font-bold text-amber-400 flex items-center gap-1 font-kufi">
+                                <i class="fa-solid fa-star"></i> 8.8
+                            </div>
+                            <div class="absolute bottom-3 right-3 bg-blue-600 text-white text-[10px] font-bold px-2 py-0.5 rounded shadow font-kufi">
+                                مستمر
+                            </div>
+                        </div>
+                        <div class="p-4 flex flex-col flex-grow justify-between">
+                            <div>
+                                <h3 class="font-bold text-white text-base mb-1 line-clamp-1 group-hover:text-animeRed transition-colors font-kufi">ون بيس</h3>
+                                <p class="text-xs text-gray-400 mb-3">مغامرة - كوميديا - أكشن</p>
+                            </div>
+                            <button onclick="openWatchModal('ون بيس')" class="w-full py-2 bg-gray-800 hover:bg-animeRed text-white font-bold text-xs rounded-xl transition-colors flex items-center justify-center gap-1 font-kufi">
+                                <i class="fa-solid fa-play"></i> مشاهدة
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Anime Card 3 -->
+                    <div class="bg-animeCard rounded-2xl overflow-hidden border border-gray-800/80 shadow-lg hover:border-animeRed/50 transition-all group flex flex-col">
+                        <div class="relative aspect-[3/4] overflow-hidden bg-gray-900">
+                            <img src="https://images.unsplash.com/photo-1563089145-599997674d42?auto=format&fit=crop&q=80&w=400" alt="Jujutsu Kaisen" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                            <div class="absolute top-3 right-3 bg-black/70 backdrop-blur-md px-2.5 py-1 rounded-lg text-xs font-bold text-amber-400 flex items-center gap-1 font-kufi">
+                                <i class="fa-solid fa-star"></i> 8.7
+                            </div>
+                            <div class="absolute bottom-3 right-3 bg-blue-600 text-white text-[10px] font-bold px-2 py-0.5 rounded shadow font-kufi">
+                                مستمر
+                            </div>
+                        </div>
+                        <div class="p-4 flex flex-col flex-grow justify-between">
+                            <div>
+                                <h3 class="font-bold text-white text-base mb-1 line-clamp-1 group-hover:text-animeRed transition-colors font-kufi">جوجوتسو كايسن</h3>
+                                <p class="text-xs text-gray-400 mb-3">أكشن - غموض - شياطين</p>
+                            </div>
+                            <button onclick="openWatchModal('جوجوتسو كايسن')" class="w-full py-2 bg-gray-800 hover:bg-animeRed text-white font-bold text-xs rounded-xl transition-colors flex items-center justify-center gap-1 font-kufi">
+                                <i class="fa-solid fa-play"></i> مشاهدة
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Anime Card 4 -->
+                    <div class="bg-animeCard rounded-2xl overflow-hidden border border-gray-800/80 shadow-lg hover:border-animeRed/50 transition-all group flex flex-col">
+                        <div class="relative aspect-[3/4] overflow-hidden bg-gray-900">
+                            <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=400" alt="Solo Leveling" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                            <div class="absolute top-3 right-3 bg-black/70 backdrop-blur-md px-2.5 py-1 rounded-lg text-xs font-bold text-amber-400 flex items-center gap-1 font-kufi">
+                                <i class="fa-solid fa-star"></i> 8.6
+                            </div>
+                            <div class="absolute bottom-3 right-3 bg-blue-600 text-white text-[10px] font-bold px-2 py-0.5 rounded shadow font-kufi">
+                                مستمر
+                            </div>
+                        </div>
+                        <div class="p-4 flex flex-col flex-grow justify-between">
+                            <div>
+                                <h3 class="font-bold text-white text-base mb-1 line-clamp-1 group-hover:text-animeRed transition-colors font-kufi">سولو ليفلينغ</h3>
+                                <p class="text-xs text-gray-400 mb-3">أكشن - فانتازيا - مغامرة</p>
+                            </div>
+                            <button onclick="openWatchModal('سولو ليفلينغ')" class="w-full py-2 bg-gray-800 hover:bg-animeRed text-white font-bold text-xs rounded-xl transition-colors flex items-center justify-center gap-1 font-kufi">
+                                <i class="fa-solid fa-play"></i> مشاهدة
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Anime Card 5 -->
+                    <div class="bg-animeCard rounded-2xl overflow-hidden border border-gray-800/80 shadow-lg hover:border-animeRed/50 transition-all group flex flex-col">
+                        <div class="relative aspect-[3/4] overflow-hidden bg-gray-900">
+                            <img src="https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?auto=format&fit=crop&q=80&w=400" alt="Demon Slayer" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                            <div class="absolute top-3 right-3 bg-black/70 backdrop-blur-md px-2.5 py-1 rounded-lg text-xs font-bold text-amber-400 flex items-center gap-1 font-kufi">
+                                <i class="fa-solid fa-star"></i> 8.6
+                            </div>
+                            <div class="absolute bottom-3 right-3 bg-blue-600 text-white text-[10px] font-bold px-2 py-0.5 rounded shadow font-kufi">
+                                مستمر
+                            </div>
+                        </div>
+                        <div class="p-4 flex flex-col flex-grow justify-between">
+                            <div>
+                                <h3 class="font-bold text-white text-base mb-1 line-clamp-1 group-hover:text-animeRed transition-colors font-kufi">قاتل الشياطين</h3>
+                                <p class="text-xs text-gray-400 mb-3">أكشن - شياطين - دراما</p>
+                            </div>
+                            <button onclick="openWatchModal('قاتل الشياطين')" class="w-full py-2 bg-gray-800 hover:bg-animeRed text-white font-bold text-xs rounded-xl transition-colors flex items-center justify-center gap-1 font-kufi">
+                                <i class="fa-solid fa-play"></i> مشاهدة
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Anime Card 6 -->
+                    <div class="bg-animeCard rounded-2xl overflow-hidden border border-gray-800/80 shadow-lg hover:border-animeRed/50 transition-all group flex flex-col">
+                        <div class="relative aspect-[3/4] overflow-hidden bg-gray-900">
+                            <img src="https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&q=80&w=400" alt="Tokyo Ghoul" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                            <div class="absolute top-3 right-3 bg-black/70 backdrop-blur-md px-2.5 py-1 rounded-lg text-xs font-bold text-amber-400 flex items-center gap-1 font-kufi">
+                                <i class="fa-solid fa-star"></i> 8.3
+                            </div>
+                            <div class="absolute bottom-3 right-3 bg-animeRed text-white text-[10px] font-bold px-2 py-0.5 rounded shadow font-kufi">
+                                مكتمل
+                            </div>
+                        </div>
+                        <div class="p-4 flex flex-col flex-grow justify-between">
+                            <div>
+                                <h3 class="font-bold text-white text-base mb-1 line-clamp-1 group-hover:text-animeRed transition-colors font-kufi">طوكيو غول</h3>
+                                <p class="text-xs text-gray-400 mb-3">أكشن - رعب - غموض</p>
+                            </div>
+                            <button onclick="openWatchModal('طوكيو غول')" class="w-full py-2 bg-gray-800 hover:bg-animeRed text-white font-bold text-xs rounded-xl transition-colors flex items-center justify-center gap-1 font-kufi">
+                                <i class="fa-solid fa-play"></i> مشاهدة
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 pt-4">
+                
+                <!-- Latest News Section -->
+                <section id="news-section" class="bg-animeCard p-6 rounded-2xl border border-gray-800 shadow-lg space-y-4">
+                    <div class="flex items-center justify-between">
+                        <h2 class="text-lg font-black text-white flex items-center gap-2 font-kufi">
+                            <i class="fa-regular fa-newspaper text-animeRed"></i> آخر الأخبار
+                        </h2>
+                        <span class="text-xs text-gray-400">محدث باستمرار</span>
+                    </div>
+
+                    <div class="space-y-4">
+                        <!-- News Item 1 -->
+                        <div class="flex items-center gap-4 p-3 rounded-xl bg-gray-900/60 hover:bg-gray-900 transition-colors border border-gray-800/50 cursor-pointer" onclick="showNotificationModal('تفاصيل الخبر: إعلان الموسم الجديد من Solo Leveling')">
+                            <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=150" class="w-20 h-16 object-cover rounded-lg flex-shrink-0" alt="News">
+                            <div>
+                                <h4 class="text-sm font-bold text-white mb-1 line-clamp-1 font-kufi">إعلان الموسم الجديد من أنمي Solo Leveling</h4>
+                                <p class="text-xs text-gray-400 mb-2 line-clamp-1">تم الكشف عن موعد عرض الموسم الثاني رسمياً في يناير 2026.</p>
+                                <span class="text-[10px] text-animeRed font-semibold flex items-center gap-1"><i class="fa-regular fa-clock"></i> 28 سبتمبر 2026</span>
+                            </div>
+                        </div>
+
+                        <!-- News Item 2 -->
+                        <div class="flex items-center gap-4 p-3 rounded-xl bg-gray-900/60 hover:bg-gray-900 transition-colors border border-gray-800/50 cursor-pointer" onclick="showNotificationModal('تفاصيل الخبر: فيلم Demon Slayer يحقق أرقاماً قياسية')">
+                            <img src="https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?auto=format&fit=crop&q=80&w=150" class="w-20 h-16 object-cover rounded-lg flex-shrink-0" alt="News">
+                            <div>
+                                <h4 class="text-sm font-bold text-white mb-1 line-clamp-1 font-kufi">فيلم Demon Slayer الجديد يحقق أرقاماً قياسية</h4>
+                                <p class="text-xs text-gray-400 mb-2 line-clamp-1">حقق الفيلم إيرادات ضخمة في أول أسبوع عرضه باليابان.</p>
+                                <span class="text-[10px] text-animeRed font-semibold flex items-center gap-1"><i class="fa-regular fa-clock"></i> 25 سبتمبر 2026</span>
+                            </div>
+                        </div>
+
+                        <!-- News Item 3 -->
+                        <div class="flex items-center gap-4 p-3 rounded-xl bg-gray-900/60 hover:bg-gray-900 transition-colors border border-gray-800/50 cursor-pointer" onclick="showNotificationModal('تفاصيل الخبر: عودة Rurouni Kenshin إلى الشاشة')">
+                            <img src="https://images.unsplash.com/photo-1578632767115-351597cf2477?auto=format&fit=crop&q=80&w=150" class="w-20 h-16 object-cover rounded-lg flex-shrink-0" alt="News">
+                            <div>
+                                <h4 class="text-sm font-bold text-white mb-1 line-clamp-1 font-kufi">عودة Rurouni Kenshin إلى الشاشة</h4>
+                                <p class="text-xs text-gray-400 mb-2 line-clamp-1">تم تأكيد إنتاج فصل جديد من الأنمي في إطار قصص هوكايدو.</p>
+                                <span class="text-[10px] text-animeRed font-semibold flex items-center gap-1"><i class="fa-regular fa-clock"></i> 20 سبتمبر 2026</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Recommended For You Section -->
+                <section class="bg-animeCard p-6 rounded-2xl border border-gray-800 shadow-lg space-y-4">
+                    <div class="flex items-center justify-between">
+                        <h2 class="text-lg font-black text-white flex items-center gap-2 font-kufi">
+                            <i class="fa-solid fa-star text-amber-400"></i> أنميات مقترحة لك
+                        </h2>
+                        <a href="#" class="text-xs text-animeRed font-semibold hover:underline font-kufi">عرض المزيد</a>
+                    </div>
+
+                    <div class="grid grid-cols-3 gap-3">
+                        <!-- Rec 1 -->
+                        <div class="group cursor-pointer" onclick="openWatchModal('Fullmetal Alchemist')">
+                            <div class="aspect-[3/4] rounded-xl overflow-hidden bg-gray-900 mb-2 border border-gray-800 group-hover:border-animeRed transition-colors">
+                                <img src="https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&q=80&w=300" class="w-full h-full object-cover group-hover:scale-105 transition-transform">
+                            </div>
+                            <h5 class="text-xs font-bold text-white line-clamp-1 group-hover:text-animeRed font-kufi">Fullmetal Alchemist</h5>
+                            <span class="text-[10px] text-amber-400 font-semibold"><i class="fa-solid fa-star"></i> 9.1</span>
+                        </div>
+
+                        <!-- Rec 2 -->
+                        <div class="group cursor-pointer" onclick="openWatchModal('Steins;Gate')">
+                            <div class="aspect-[3/4] rounded-xl overflow-hidden bg-gray-900 mb-2 border border-gray-800 group-hover:border-animeRed transition-colors">
+                                <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&q=80&w=300" class="w-full h-full object-cover group-hover:scale-105 transition-transform">
+                            </div>
+                            <h5 class="text-xs font-bold text-white line-clamp-1 group-hover:text-animeRed font-kufi">Steins;Gate</h5>
+                            <span class="text-[10px] text-amber-400 font-semibold"><i class="fa-solid fa-star"></i> 9.1</span>
+                        </div>
+
+                        <!-- Rec 3 -->
+                        <div class="group cursor-pointer" onclick="openWatchModal('Naruto Shippuden')">
+                            <div class="aspect-[3/4] rounded-xl overflow-hidden bg-gray-900 mb-2 border border-gray-800 group-hover:border-animeRed transition-colors">
+                                <img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&q=80&w=300" class="w-full h-full object-cover group-hover:scale-105 transition-transform">
+                            </div>
+                            <h5 class="text-xs font-bold text-white line-clamp-1 group-hover:text-animeRed font-kufi">Naruto Shippuden</h5>
+                            <span class="text-[10px] text-amber-400 font-semibold"><i class="fa-solid fa-star"></i> 8.8</span>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+
+        </div>
+
+        <aside class="space-y-8">
+            
+            <!-- Categories Widget -->
+            <div class="bg-animeCard p-5 rounded-2xl border border-gray-800 shadow-lg space-y-4">
+                <h3 class="text-base font-black text-white flex items-center gap-2 border-b border-gray-800 pb-3 font-kufi">
+                    <i class="fa-solid fa-grip text-animeRed"></i> التصنيفات
+                </h3>
+                <div class="grid grid-cols-2 gap-2">
+                    <a href="#" class="flex items-center gap-2 px-3 py-2 rounded-xl bg-gray-900/60 hover:bg-animeRed hover:text-white text-gray-300 text-xs font-semibold transition-colors font-kufi">
+                        <i class="fa-solid fa-bolt text-animeRed"></i> أكشن
+                    </a>
+                    <a href="#" class="flex items-center gap-2 px-3 py-2 rounded-xl bg-gray-900/60 hover:bg-animeRed hover:text-white text-gray-300 text-xs font-semibold transition-colors font-kufi">
+                        <i class="fa-solid fa-compass text-animeRed"></i> مغامرة
+                    </a>
+                    <a href="#" class="flex items-center gap-2 px-3 py-2 rounded-xl bg-gray-900/60 hover:bg-animeRed hover:text-white text-gray-300 text-xs font-semibold transition-colors font-kufi">
+                        <i class="fa-solid fa-face-laugh text-animeRed"></i> كوميديا
+                    </a>
+                    <a href="#" class="flex items-center gap-2 px-3 py-2 rounded-xl bg-gray-900/60 hover:bg-animeRed hover:text-white text-gray-300 text-xs font-semibold transition-colors font-kufi">
+                        <i class="fa-solid fa-masks-theater text-animeRed"></i> دراما
+                    </a>
+                    <a href="#" class="flex items-center gap-2 px-3 py-2 rounded-xl bg-gray-900/60 hover:bg-animeRed hover:text-white text-gray-300 text-xs font-semibold transition-colors font-kufi">
+                        <i class="fa-solid fa-wand-magic-sparkles text-animeRed"></i> فانتازيا
+                    </a>
+                    <a href="#" class="flex items-center gap-2 px-3 py-2 rounded-xl bg-gray-900/60 hover:bg-animeRed hover:text-white text-gray-300 text-xs font-semibold transition-colors font-kufi">
+                        <i class="fa-solid fa-ghost text-animeRed"></i> غموض
+                    </a>
+                    <a href="#" class="flex items-center gap-2 px-3 py-2 rounded-xl bg-gray-900/60 hover:bg-animeRed hover:text-white text-gray-300 text-xs font-semibold transition-colors font-kufi">
+                        <i class="fa-solid fa-heart text-animeRed"></i> رومانسي
+                    </a>
+                    <a href="#" class="flex items-center gap-2 px-3 py-2 rounded-xl bg-gray-900/60 hover:bg-animeRed hover:text-white text-gray-300 text-xs font-semibold transition-colors font-kufi">
+                        <i class="fa-solid fa-atom text-animeRed"></i> خيال علمي
+                    </a>
+                </div>
+                <button class="w-full py-2 text-center text-xs font-bold text-animeRed hover:underline pt-2 font-kufi">
+                    عرض جميع التصنيفات <i class="fa-solid fa-angle-left"></i>
+                </button>
+            </div>
+
+            <!-- Top Rated Widget -->
+            <div class="bg-animeCard p-5 rounded-2xl border border-gray-800 shadow-lg space-y-4">
+                <h3 class="text-base font-black text-white flex items-center gap-2 border-b border-gray-800 pb-3 font-kufi">
+                    <i class="fa-solid fa-trophy text-amber-400"></i> أفضل الأنميات تقييماً
+                </h3>
+
+                <div class="space-y-3">
+                    <!-- Top 1 -->
+                    <div class="flex items-center gap-3 p-2 rounded-xl hover:bg-gray-900/80 transition-colors cursor-pointer group" onclick="openWatchModal('Fullmetal Alchemist: Brotherhood')">
+                        <span class="font-black text-lg text-amber-400 w-5 text-center font-kufi">1</span>
+                        <img src="https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&q=80&w=100" class="w-12 h-16 object-cover rounded-lg" alt="Top 1">
+                        <div class="flex-grow min-w-0">
+                            <h5 class="text-xs font-bold text-white truncate group-hover:text-animeRed font-kufi">Fullmetal Alchemist</h5>
+                            <span class="text-[11px] text-amber-400 font-bold flex items-center gap-1"><i class="fa-solid fa-star"></i> 9.1</span>
+                        </div>
+                    </div>
+
+                    <!-- Top 2 -->
+                    <div class="flex items-center gap-3 p-2 rounded-xl hover:bg-gray-900/80 transition-colors cursor-pointer group" onclick="openWatchModal('Steins;Gate')">
+                        <span class="font-black text-lg text-gray-400 w-5 text-center font-kufi">2</span>
+                        <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&q=80&w=100" class="w-12 h-16 object-cover rounded-lg" alt="Top 2">
+                        <div class="flex-grow min-w-0">
+                            <h5 class="text-xs font-bold text-white truncate group-hover:text-animeRed font-kufi">Steins;Gate</h5>
+                            <span class="text-[11px] text-amber-400 font-bold flex items-center gap-1"><i class="fa-solid fa-star"></i> 9.1</span>
+                        </div>
+                    </div>
+
+                    <!-- Top 3 -->
+                    <div class="flex items-center gap-3 p-2 rounded-xl hover:bg-gray-900/80 transition-colors cursor-pointer group" onclick="openWatchModal('Hunter x Hunter')">
+                        <span class="font-black text-lg text-amber-600 w-5 text-center font-kufi">3</span>
+                        <img src="https://images.unsplash.com/photo-1563089145-599997674d42?auto=format&fit=crop&q=80&w=100" class="w-12 h-16 object-cover rounded-lg" alt="Top 3">
+                        <div class="flex-grow min-w-0">
+                            <h5 class="text-xs font-bold text-white truncate group-hover:text-animeRed font-kufi">Hunter x Hunter</h5>
+                            <span class="text-[11px] text-amber-400 font-bold flex items-center gap-1"><i class="fa-solid fa-star"></i> 9.0</span>
+                        </div>
+                    </div>
+
+                    <!-- Top 4 -->
+                    <div class="flex items-center gap-3 p-2 rounded-xl hover:bg-gray-900/80 transition-colors cursor-pointer group" onclick="openWatchModal('Attack on Titan')">
+                        <span class="font-black text-lg text-gray-500 w-5 text-center font-kufi">4</span>
+                        <img src="https://images.unsplash.com/photo-1541562232579-512a21360020?auto=format&fit=crop&q=80&w=100" class="w-12 h-16 object-cover rounded-lg" alt="Top 4">
+                        <div class="flex-grow min-w-0">
+                            <h5 class="text-xs font-bold text-white truncate group-hover:text-animeRed font-kufi">Attack on Titan</h5>
+                            <span class="text-[11px] text-amber-400 font-bold flex items-center gap-1"><i class="fa-solid fa-star"></i> 9.0</span>
+                        </div>
+                    </div>
+
+                    <!-- Top 5 -->
+                    <div class="flex items-center gap-3 p-2 rounded-xl hover:bg-gray-900/80 transition-colors cursor-pointer group" onclick="openWatchModal('One Piece')">
+                        <span class="font-black text-lg text-gray-500 w-5 text-center font-kufi">5</span>
+                        <img src="https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?auto=format&fit=crop&q=80&w=100" class="w-12 h-16 object-cover rounded-lg" alt="Top 5">
+                        <div class="flex-grow min-w-0">
+                            <h5 class="text-xs font-bold text-white truncate group-hover:text-animeRed font-kufi">One Piece</h5>
+                            <span class="text-[11px] text-amber-400 font-bold flex items-center gap-1"><i class="fa-solid fa-star"></i> 8.8</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </aside>
+
+    </main>
+
+    <footer class="bg-animeCard border-t border-gray-800 mt-16 py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-animeRed to-amber-500 flex items-center justify-center text-white font-black text-xl shadow-md">
+                    <i class="fa-solid fa-play"></i>
+                </div>
+                <div>
+                    <span class="text-base font-black text-white font-kufi">عالم بن سعدون <span class="text-animeRed">عبد الرزاق</span></span>
+                    <p class="text-xs text-gray-400">عالم الأنمي بين يديك</p>
+                </div>
+            </div>
+
+            <div class="flex flex-wrap items-center justify-center gap-6 text-sm text-gray-400 font-kufi">
+                <a href="#" class="hover:text-white transition-colors">الشروط والأحكام</a>
+                <a href="#" class="hover:text-white transition-colors">سياسة الخصوصية</a>
+                <a href="#" class="hover:text-white transition-colors">تواصل معنا</a>
+            </div>
+
+            <div class="flex items-center gap-4 text-gray-400">
+                <a href="#" class="hover:text-animeRed transition-colors text-lg"><i class="fa-brands fa-telegram"></i></a>
+                <a href="#" class="hover:text-animeRed transition-colors text-lg"><i class="fa-brands fa-discord"></i></a>
+                <a href="#" class="hover:text-animeRed transition-colors text-lg"><i class="fa-brands fa-x-twitter"></i></a>
+                <a href="#" class="hover:text-animeRed transition-colors text-lg"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#" class="hover:text-animeRed transition-colors text-lg"><i class="fa-brands fa-youtube"></i></a>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6 pt-6 border-t border-gray-800/60 text-center text-xs text-gray-500 font-kufi">
+            © 2026 عالم بن سعدون عبد الرزاق. جميع الحقوق محفوظة.
+        </div>
+    </footer>
+
+    <!-- Watch / Modal Player -->
+    <div id="watchModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden items-center justify-center p-4">
+        <div class="bg-animeCard border border-gray-800 rounded-2xl max-w-2xl w-full p-6 space-y-6 relative animate-in fade-in zoom-in duration-200">
+            <button onclick="closeWatchModal()" class="absolute top-4 left-4 text-gray-400 hover:text-white text-xl p-2">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="flex items-center gap-3">
+                <div class="w-12 h-12 rounded-xl bg-animeRed/10 text-animeRed flex items-center justify-center text-2xl font-bold">
+                    <i class="fa-solid fa-play"></i>
+                </div>
+                <div>
+                    <h3 id="modalAnimeTitle" class="text-xl font-bold text-white font-kufi">مشغل الحلقات</h3>
+                    <p class="text-xs text-gray-400">اختر الحلقة المناسبة للمشاهدة بجودة عالية</p>
+                </div>
+            </div>
+
+            <!-- Fake Video Player Screen -->
+            <div class="aspect-video bg-black rounded-xl overflow-hidden relative border border-gray-800 flex items-center justify-center group">
+                <img src="https://images.unsplash.com/photo-1578632767115-351597cf2477?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover opacity-60">
+                <div class="absolute inset-0 bg-black/40 flex items-center justify-center">
+                    <button class="w-16 h-16 rounded-full bg-animeRed text-white flex items-center justify-center text-2xl shadow-xl hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-play mr-0.5"></i>
+                    </button>
+                </div>
+                <div class="absolute bottom-3 right-3 left-3 flex items-center justify-between text-xs text-gray-300 bg-black/60 backdrop-blur-md px-3 py-2 rounded-lg font-kufi">
+                    <span>الحلقة 01 - البداية الجديدة</span>
+                    <span class="text-animeRed font-bold">HD 1080p</span>
+                </div>
+            </div>
+
+            <div class="flex justify-end gap-3 font-kufi">
+                <button onclick="closeWatchModal()" class="px-5 py-2.5 bg-gray-800 hover:bg-gray-700 text-white font-bold text-sm rounded-xl transition-colors">إغلاق</button>
+                <button onclick="closeWatchModal(); showNotificationModal('تمت إضافة الأنمي لقائمة المشاهدة بنجاح!')" class="px-5 py-2.5 bg-animeRed hover:bg-animeRedHover text-white font-bold text-sm rounded-xl transition-colors">إضافة لقائمتي</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification / Message Modal -->
+    <div id="notificationModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden items-center justify-center p-4">
+        <div class="bg-animeCard border border-gray-800 rounded-2xl max-w-md w-full p-6 space-y-4 text-center">
+            <div class="w-14 h-14 bg-animeRed/10 text-animeRed rounded-full flex items-center justify-center mx-auto text-2xl">
+                <i class="fa-solid fa-bell"></i>
+            </div>
+            <h3 class="text-lg font-bold text-white font-kufi">إشعار عالم بن سعدون عبد الرزاق</h3>
+            <p id="notificationText" class="text-sm text-gray-300"></p>
+            <button onclick="closeNotificationModal()" class="w-full py-2.5 bg-animeRed hover:bg-animeRedHover text-white font-bold text-sm rounded-xl transition-colors font-kufi">حسناً</button>
+        </div>
+    </div>
+
+    <!-- JavaScript Slider and Modal Logic -->
+    <script>
+        // Hero Slider Data
+        const slides = [
+            {
+                title: "روروني كينشين - فصل هوكايدو",
+                desc: "يعود كينشين هيمورا في فصل جديد مليء بالإثارة، حيث يواجه ماضياً مظلماً في شمال اليابان. هل سيظل السيف مغموراً بالدماء؟",
+                image: "https://images.unsplash.com/photo-1578632767115-351597cf2477?auto=format&fit=crop&q=80&w=1200",
+                badge: "أنمي الموسم",
+                rating: "9.3"
+            },
+            {
+                title: "هجوم العملاقة - الموسم الأخير",
+                desc: "ملحمة البشرية ضد العمالقة تصل إلى ذروتها الكبرى. معارك ضارية ومصير غامض ينتظر إيرين ييغر وأصدقائه.",
+                image: "https://images.unsplash.com/photo-1541562232579-512a21360020?auto=format&fit=crop&q=80&w=1200",
+                badge: "الأعلى تقييماً",
+                rating: "9.5"
+            },
+            {
+                title: "سولو ليفلينغ - الموسم الثاني",
+                desc: "سونغ جين وو يعود بقوة أكبر ليقود نقابته ويخوض أقبية ومحاربين جدد في رحلة لتجاوز حدود القوة البشرية.",
+                image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=1200",
+                badge: "جديد الآن",
+                rating: "9.1"
+            },
+            {
+                title: "قاتل الشياطين - قصر الأبدي",
+                desc: "تانجيرو وأعضاء الهاشيرا يستعدون للمعركة الحاسمة ضد كيباتسوجي موزان في قصر الشياطين المظلم.",
+                image: "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?auto=format&fit=crop&q=80&w=1200",
+                badge: "حصري",
+                rating: "9.2"
+            }
+        ];
+
+        let currentSlide = 0;
+        const heroTitle = document.getElementById('heroTitle');
+        const heroDesc = document.getElementById('heroDesc');
+        const heroImage = document.getElementById('heroImage');
+        const heroBadge = document.getElementById('heroBadge');
+        const heroRating = document.getElementById('heroRating');
+        const slideDots = document.getElementById('slideDots').children;
+
+        function updateSlide(index) {
+            currentSlide = index;
+            const slide = slides[currentSlide];
+            
+            heroImage.style.opacity = '0.5';
+            setTimeout(() => {
+                heroTitle.textContent = slide.title;
+                heroDesc.textContent = slide.desc;
+                heroImage.src = slide.image;
+                heroBadge.textContent = slide.badge;
+                heroRating.textContent = slide.rating;
+                heroImage.style.opacity = '1';
+            }, 150);
+
+            for (let i = 0; i < slideDots.length; i++) {
+                if (i === currentSlide) {
+                    slideDots[i].className = "w-8 h-2 rounded-full bg-animeRed cursor-pointer transition-all";
+                } else {
+                    slideDots[i].className = "w-2 h-2 rounded-full bg-gray-600 hover:bg-gray-400 cursor-pointer transition-all";
+                }
+            }
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % slides.length;
+            updateSlide(currentSlide);
+        }
+
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+            updateSlide(currentSlide);
+        }
+
+        function setSlide(index) {
+            updateSlide(index);
+        }
+
+        setInterval(nextSlide, 6000);
+
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        function openWatchModal(title = 'روروني كينشين - فصل هوكايدو') {
+            document.getElementById('modalAnimeTitle').textContent = title;
+            const modal = document.getElementById('watchModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeWatchModal() {
+            const modal = document.getElementById('watchModal');
+            modal.classList.remove('flex');
+            modal.classList.add('hidden');
+        }
+
+        function openDetailsModal() {
+            showNotificationModal('عرض تفاصيل الأنمي وقائمة الحلقات الكاملة.');
+        }
+
+        function showNotificationModal(text) {
+            document.getElementById('notificationText').textContent = text;
+            const modal = document.getElementById('notificationModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeNotificationModal() {
+            const modal = document.getElementById('notificationModal');
+            modal.classList.remove('flex');
+            modal.classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
